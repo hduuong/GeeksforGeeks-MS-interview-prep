@@ -1,0 +1,6 @@
+Write a program to print Binary representation of a given number.
+
+public void binary(int n) {
+    if (n>2) binary(n/2);
+    System.out.println(n%2);
+}
