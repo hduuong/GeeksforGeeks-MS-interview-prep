@@ -1,0 +1,44 @@
+Calculate difficulty of a given sentence. Here a Word is considered hard if it has 4 consecutive consonants or number of consonants 
+are more than number of vowels. Else word is easy. Difficulty of sentence is defined as 5*(number of hard words) + 3*(number of easy words).
+
+Examples:
+
+Input : str = "Difficulty of sentence"
+Output : 13
+Hard words = 2(Difficulty and sentence)
+Easy words = 1(of)
+So, answer is 5*2+3*1 = 13
+
+public class Solution {
+    private boolean isVowel(char ch) {
+        return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u';
+    }
+    
+    public int sentenceDifficulty(String s) {
+        int hard = 0, easy = 0;
+        int consecutive = 0, vowel = 0, consonant = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch != ' ' && isVowel(Character.toLowerCase(ch))) {
+                vowel++;
+                consecutive = 0;
+            } else if (ch != ' ') {
+                consonant++;
+                consecutive++;
+            }
+            
+            if (consecutive == 4) {
+                hard++;
+                while (i < s.length() && s.charAt(i) != ' ') {
+                    i++;
+                }
+                consecutive = vowel = consonant = 0;
+            } else if (i < s.length() && (ch == ' ' || i == s.length() - 1)) {
+                (consonant > vowel) ? hard++ : easy++;
+                consecutive = vowel = consonant = 0;
+            }
+        }
+        return hard*5 + easy*1;
+    }   
+}
