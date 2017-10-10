@@ -1,0 +1,51 @@
+Given a number, find its corresponding Roman numeral.
+Example:
+
+Input : 9
+Output : IX
+
+Input : 40
+Output : XL
+
+Input :  1904
+Output : MCMIV
+Following is the list of Roman symbols which include subtractive cases also:
+
+I - 1
+IV - 4
+V - 5
+IX - 9
+X - 10
+XL - 40
+L - 50
+XC - 90
+C - 100
+CD - 400
+D - 500
+CM - 900
+M - 1000
+
+In this approach we have to first observe the problem. The number given in problem statement can be maximum of 4 digits. 
+The idea to solve this problem is:
+  1/ Divide the given number into digits at different places like one’s , two’s , hundred’s or thousand’s.
+  2/ Starting from the thousand’s place print the corresponding roman value. For example, 
+     if the digit at thousand’s place is 3 then print the roman equivalent of 3000.
+  3/ Repeat the second step until we reach one’s place.
+  
+public String decimalToRoman(int n) {
+    String[] m = ["", "M", "MM", "MMM"]
+    String[] c = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
+    String[] x = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
+    String[] i = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+    
+    String thousannds = m[n/1000];
+    n %= 1000;
+    String hundreds = c[n/100];
+    n %= 100;
+    String tens = x[n/10];
+    n %= 10;
+    String ones = i[n];
+    
+    String ans = thousands + hundreds + tens + ones;
+    return ans;
+}
