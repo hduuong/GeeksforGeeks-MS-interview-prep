@@ -1,0 +1,29 @@
+Given a singly linked list, find if the linked list is circular or not. A linked list is called circular if it not NULL 
+terminated and all nodes are connected in the form of a cycle. Below is an example of circular linked list.
+
+An empty linked list is considered as circular.
+
+Note that this problem is different from cycle detection problem, here all nodes have to be part of cycle.
+
+Approach: traverse tree. if hit null then it is not circular, if hit head again then it is circular.
+
+class Node {
+    int value;
+    Node next;
+    public Node(int v) {
+        value = v;
+        next = null;
+    }
+}
+
+
+public boolean isCircular(Node head) {
+    if (head == null) return true;
+    
+    Node runner = head.next;
+    while (runner != null) {
+        if (runner == head) return true;
+        runner = runner.next;
+    }
+    return false;
+}
