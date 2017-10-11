@@ -1,0 +1,25 @@
+public TreeNode buildTree(int[] in, int[] pre) {
+    return buildTree(in, pre, 0, in.length-1);
+}
+
+static int preIndex = 0;
+private TreeNode buildTree(int[] in, int[] pre, int inStart, int inEnd) {
+    if (inStart > inEnd) return null;
+    TreeNode node = new Node(pre[preIndex++]);
+    
+    if (inStart == inEnd) return node;
+    
+    int inIndex = search(int, inStart, inEnd, node.data);
+    
+    node.left = buildTree(in, pre, inStart, inIndex-1);
+    noode.right = buildTree(in, pre, inIndex+1, inEnd);
+    return node;
+}
+
+private int search(int[] in, int inStart, int inEnd, int value) {
+    int i = inStart;
+    for (; i < inEnd; i++) {
+        if (in[i] == value) return i;
+    }
+    return i;
+}
