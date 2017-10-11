@@ -1,0 +1,49 @@
+Given a binary tree, print boundary nodes of the binary tree Anti-Clockwise starting from the root. 
+
+Approach: print leftBoundary -> leaves of leftsubtree -> leaves of right substree -> rightBoundary
+
+public class TreeNode() {
+    int data;
+    TreeNode left, right;
+    public TreeNode(int v) {
+        data = v;
+        left = null;
+        right = null;
+    }
+}
+
+public void printBoundary(TreeNode root) {
+    if (root == null) return;
+    printLeftBound(root);
+    printLeaves(root);
+    printRightBound(root);
+}
+
+private void printLeftBound(TreeNode root) {
+    if (root == null) return;
+    if (root.left != null) {
+        System.out.println(root.data);
+        printLeftBound(root.left);
+    } else if (root.right != null) {
+        System.out.println(root.data);
+        printLeftBound(root.right);
+    }
+}
+
+private void printRightBound(TreeNode root) {
+    if (root == null) return false;
+    if (root.right != null) {
+        printRightBound(root.right);
+        System.out.println(root.data);
+    } else if (root.left != null) {
+        printRightBound(root.left);
+        System.out.println(root.data);
+    }
+}
+
+private void printLeaves(TreeNode root) {
+    if (root == null) return;
+    printLeaves(root.left);
+    if (root.left == null && root.right == null) System.out.println(root.data);
+    printLeaves(root.right);
+}
