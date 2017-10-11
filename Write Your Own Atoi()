@@ -1,0 +1,28 @@
+The atoi() function takes a string (which represents an integer) as an argument and returns its value.
+
+Needs to handle negative numbers, and edge cases
+
+
+private boolean isNumeric(char c) {
+    return (c >= '0' && c <= '9');
+}
+
+public int atoi(String s) {
+    if (s == null || s.length() == 0) return 0;
+    
+    int res = 0;
+    int sign = 1;
+    int i = 0;
+    
+    if (s.charAt(0) == '-') {
+        sign = -1;
+        i++;
+    }
+    
+    for (; i < s.length(); i++) {
+        if (!isNumeric(s.charAt(i))) return 0;
+        res += res*10 + s.charAt(i) - '0';
+    }
+    
+    return sign*res;
+}
