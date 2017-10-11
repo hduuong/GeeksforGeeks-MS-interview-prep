@@ -1,0 +1,55 @@
+Approach: if a new value entered stack that is smaller than currentMin. store 2*x-min in stack so we can retrieve lastMin when pop.
+
+Number to be Inserted: 3, Stack is empty, so insert 3 into stack and minEle = 3.
+Number to be Inserted: 5, Stack is not empty, 5> minEle, insert 5 into stack and minEle = 3.
+Number to be Inserted: 2, Stack is not empty, 2< minEle, insert (2*2-3 = 1) into stack and minEle = 2.
+Number to be Inserted: 1, Stack is not empty, 1< minEle, insert (2*1-2 = 0) into stack and minEle = 1.
+Number to be Inserted: 1, Stack is not empty, 1 = minEle, insert 1 into stack and minEle = 1.
+Number to be Inserted: -1, Stack is not empty, -1 < minEle, insert (2*-1 – 1 = -3) into stack and minEle = -1.
+
+Initially the minimum element minEle in the stack is -1.
+Number removed: -3, Since -3 is less than the minimum element the original number being removed is minEle which is -1, and the new minEle = 2*-1 – (-3) = 1
+Number removed: 1, 1 == minEle, so number removed is 1 and minEle is still equal to 1.
+Number removed: 0, 0< minEle, original number is minEle which is 1 and new minEle = 2*1 – 0 = 2.
+Number removed: 1, 1< minEle, original number is minEle which is 2 and new minEle = 2*2 – 1 = 3.
+Number removed: 5, 5> minEle, original number is 5 and minEle is still 3
+
+public class minStack<Integer>() {
+    Stack<Integer> s;
+    int min;
+    
+    public minStack() {
+        s = new Stack<>();
+    }
+    
+    public int getMin() {
+        if (!s.isEmpty()) return min;
+        else throw new Exception("stack is Empty");
+    }
+    
+    public void push(int x) {
+        if (s.isEmpty()) {
+            min = x;
+            s.push(x);
+            return;
+        }
+        if (x < min) {
+            s.push(2*x-min);
+            min = x;
+        } else {
+            s.push(x);
+        }
+    }
+    
+    public int pop() {
+        if (s.isEmpty()) throw new Exception("stack is Empty");
+        int top = s.pop();
+        if (top > min) {
+            return top;
+        } else {
+            int oldMin = min;
+            min = 2*min - top;
+            return oldMin;
+        }
+    }
+}
