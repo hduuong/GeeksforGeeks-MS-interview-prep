@@ -1,0 +1,31 @@
+Question: Write an efficient program for printing k largest elements in an array. Elements in array can be in any order.
+
+For example, if given array is [1, 23, 12, 9, 30, 2, 50] and you are asked for the largest 3 elements i.e., 
+k = 3 then your program should print 50, 30 and 23.
+
+Method 1: sorting then print k elements. O(nlogn);
+
+public void printkLargest(int[] array, int k) {
+    Arrays.sort(array);
+    for (int i = 0; i < k; i++) {
+        System.out.println(array[n-1-i]);
+    }
+}
+
+Method 2: create a MaxHeap, maintain the heap in size k. printout all heap elements in the end.
+
+public List<Integer> printKLargest(int[] array. int k) {
+    PriorityQueue<Integer> maxheap = new PriorityQueue<>(k, new Comparator<Integer>() {
+        public int compare(int a, int b) {
+            return a - b;
+        }
+    });
+    
+    for (int i = 0; i < array.length; i++) {
+        maxheap.add(array[i]);
+        if (maxheap.size() > k) {
+            maxheap.poll();
+        }
+    }
+    return new ArrayList<Integer>(maxheap);
+}
