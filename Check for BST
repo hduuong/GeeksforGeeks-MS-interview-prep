@@ -1,0 +1,11 @@
+public boolean isBST(TreeNode node) {
+    return isBST(node, Integer.MIN_VALUE, Integer.MAX_VALUE);        
+}
+
+private boolean isBST(TreeNode node, int low, int high) {
+    if (node == null) return true;
+    
+    return (node.data > low && node.data <= high) &&
+            isBST(node.left, low, node.data) &&
+            isBST(node.right, node.data, high);
+}
