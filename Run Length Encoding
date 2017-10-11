@@ -1,0 +1,25 @@
+Given an input string, write a function that returns the Run Length Encoded string for the input string.
+
+For example, if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6”.
+
+public String encode(String s) {
+    if (s == null || s.length() == 0) return "";
+    String res = "";
+    char current = s.charAt(0);
+    int count = 1;
+    for (int i = 1; i < s.length(); i++) {
+        if (current != s.charAt(i)) {
+            res += String.valueOf(current);
+            res += String.valueOf(count);
+            current = s.charAt(i);
+            count = 1;
+        } else {
+            count++;        
+        }
+    }
+    //add the last character encoding
+    res += String.valueOf(current);
+    res += String.valueOf(count);
+    
+    return res;
+}
