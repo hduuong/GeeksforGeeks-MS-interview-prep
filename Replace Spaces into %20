@@ -1,0 +1,35 @@
+Write a method to replace all the spaces in a string with ‘%20’. 
+You may assume that the string has sufficient space at the end to hold the additional characters, 
+and that you are given the “true” length of the string.
+
+Examples:
+
+Input : "Mr John Smith", 13
+Output : Mr%20John%20Smith
+
+Input : "Mr John Smith   ", 13
+Output : Mr%20John%20Smith
+
+public void replaceSpaces(char[] s) {
+    if (s == null || s.length == 0) return;
+    int spaceCount = 0;
+    int i = 0;
+    for (; i < s.length; i++) {
+        if (s[i] == ' ') spaceCount++
+    }
+    while (i > 0 && s[i] == ' ') {
+        spaceCount--;
+        i--;
+    }
+    
+    for(int j = s.length - 1; j >= 0 && i >= 0; j--) {
+        if (s[i] == ' ') {
+            s[j--] = '0';
+            s[j--] = '2';
+            s[j] = '%';
+        } else {
+            s[j] = s[i];
+        }
+        i--;
+    }
+}
