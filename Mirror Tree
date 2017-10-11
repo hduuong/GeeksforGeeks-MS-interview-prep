@@ -1,0 +1,12 @@
+Mirror of a Tree: Mirror of a Binary Tree T is another Binary Tree M(T) with left and right children of all non-leaf nodes interchanged.
+
+public TreeNode mirror(TreeNode root) {
+    if (root == null) return null;
+    TreeNode left = mirror(root.left);
+    TreeNode right = mirror(root.right);
+    
+    root.left = right;
+    root.right = left;
+    
+    return root;
+}
