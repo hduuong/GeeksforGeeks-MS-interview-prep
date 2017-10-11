@@ -1,0 +1,113 @@
+Given a dictionary, a method to do lookup in dictionary and a M x N board where every cell has one character. 
+Find all possible words that can be formed by a sequence of adjacent characters. 
+Note that we can move to any of 8 adjacent characters, but a word should not have multiple instances of same cell.
+
+Example:
+
+Input: dictionary[] = {"GEEKS", "FOR", "QUIZ", "GO"};
+       boggle[][]   = {{'G','I','Z'},
+                       {'U','E','K'},
+                       {'Q','S','E'}};
+      isWord(str): returns true if str is present in dictionary
+                   else false.
+
+Output:  Following words of dictionary are present
+         GEEKS
+         QUIZ
+         
+public final int SIZE = 26;
+public final int M = 3;
+public final int N = 3;
+
+public class TrieNode() {
+    boolean isLeaf;
+    TrieNode[] children;
+    public TrieNode() {
+        children = new TrieNode[SIZE];
+        isLeaf = false;
+        for (int i = 0; i < children.length; i++) {
+            children[i] = null;
+        }
+    }
+    
+    public void setLeaf() { leaf = true; }
+    
+    public void insert(String s) {
+        TrieNode current = this;
+        for (char ch : s.toCharArray()) {
+            int index = ch - 'A';
+            if (current.children[index] == null) {
+                current.children[index] = new TrieNode();
+            }
+            current = current.children[index];
+        }
+        current.setLeaf();
+    }
+}
+
+private boolea isSafe(int i, int j, boolean visited[][]) {
+    return (i>=0 && i < M && j >= 0 && j < N && !visited[i][j]);
+}
+private void search(char[][] boggle, TrieNode node, int i, int j, boolean[][]visited, String s) {
+    if (node.isLeaf) System.out.println(s);
+    
+    if (isSafe(i, j, visited)) {
+        visited[i][j] = true;
+        for (int k = 0; k < SIZE; k++) {
+            if (node.children[k] != null) {
+                char ch = Character.valueOf(k + 'A');
+                if (isSafe(i-1,j-1,visited) && boggle[i-1][j-1] == ch)
+                    search(boggle, node.children[k], i-1, j-1, visited, s+ch);
+                if (isSafe(i-1,j,visited) && boggle[i-1][j] == ch)
+                    search(boggle, node.children[k], i-1, j, visited, s+ch);
+                if (isSafe(i-1,j+1,visited) && boggle[i-1][j+1] == ch)
+                    search(boggle, node.children[k], i-1, j+1, visited, s+ch);
+                if (isSafe(i,j-1,visited) && boggle[i][j-1] == ch)
+                    search(boggle, node.children[k], i, j-1, visited, s+ch);
+                if (isSafe(i,j+1,visited) && boggle[i][j+1] == ch)
+                    search(boggle, node.children[k], i, j+1, visited, s+ch);
+                if (isSafe(i+1,j-1,visited) && boggle[i+1][j-1] == ch)
+                    search(boggle, node.children[k], i+1, j-1, visited, s+ch);
+                if (isSafe(i+1,j,visited) && boggle[i+1][j] == ch)
+                    search(boggle, node.children[k], i+1, j, visited, s+ch);
+                if (isSafe(i+1,j+1,visited) && boggle[i+1][j+1] == ch)
+                    search(boggle, node.children[k], i+1, j+1, visited, s+ch);
+            }   
+        }
+        visited[i][j] = false;
+    }
+}
+
+
+public void findWords(char[][] boggle, TrieNode root) {
+    boolean[][] visited = new boolan[M][N];
+    String s = "";    
+    for (int i = 0; i < M; i++) {
+        for (int j = 0; j < N; j++) {
+            if (root.children[boggle[i][j] - 'A'] != null) {
+                s += boggle[i][j];
+                search(boggle, root.children[boggle[i][j] - 'A'], i, j, visited, s);
+                s = "";
+            }
+        }
+    }
+}
+
+public static void main(String args[]) {
+    // Let the given dictionary be following
+    String dictionary[] = {"GEEKS", "FOR", "QUIZ", "GEE"};    
+    // root Node of trie
+    TrieNode root = new TrieNode();
+      
+    // insert all words of dictionary into trie
+    int n = dictionary.length;
+    for (int i=0; i<n; i++){
+        insert(root, dictionary[i]);
+    }  
+    char boggle[][] = {{'G','I','Z'},
+                       {'U','E','K'},
+                       {'Q','S','E'}};
+      
+    findWords(boggle, root);
+              
+}
