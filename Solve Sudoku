@@ -1,0 +1,49 @@
+Given a partially filled 9×9 2D array ‘grid[9][9]’, 
+the goal is to assign digits (from 1 to 9) to the empty cells so that every row, column, and subgrid of size 3×3 contains exactly 
+one instance of the digits from 1 to 9.
+
+public final int M = 9;
+public final int N = 9;
+public final int UNASSIGNED = 0;
+public int row, col;
+public boolean solveSudoku(int[][] grid) {
+    if (!findUnassignedLocation(grid)) return true;
+    
+    for (int num = 1; num <= 9; num++) {
+        if (isSafe(grid, row, col, num)) {
+            grid[row][col] = num;
+            if (solveSudoku(grid)) return true;
+            grid[row][col] = UNASSIGNED;
+        }
+    }
+    return false;
+}
+
+private boolean findUnassignedLocation(grid) {
+    for (row = 0; row < M; row++) {
+        for (col = 0; col < N; col++) {
+            if (grid[row][col] == UNASSIGNED) return true;
+        }
+    }
+    return false;
+}
+
+private boolean isSafe(int[][] grid, int row, int col, int num) {
+    //check row
+    for (int i = 0; i < N; i++) {
+        if (grid[row][i] == num) return false;
+    }
+    //check col
+    for (int i = 0; i < M; i++) {
+        if (grid[i][col] == num) return false;
+    }
+    //check box
+    int startBoxRow = row - row%3;
+    int startBoxCol = col - col%3;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (grid[startBoxRow+i][startBoxCol+j] == num) return false;
+        }
+    }
+    return true;
+}
