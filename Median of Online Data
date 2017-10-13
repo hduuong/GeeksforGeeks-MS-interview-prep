@@ -1,0 +1,17 @@
+approach: use MinHeap and MaxHeap. median = (minheap.size == maxheap.size) ? 0.5*(minheap.peek + maxheap.peek) : minheap.peek
+
+public static void onlineMedian(Iterator<Integer> sequence) {
+    PriorityQueue minheap = new priorityQueue<>();
+    PriorityQueue maxheap = new PriorityQueue<>(Collections.reverseOrder());
+    
+    while(sequence.hasNext()) {
+        int x = sequence.next();
+        minheap.add(x);
+        maxheap.add(minheap.remove());
+        
+        if (maxheap.size() > minheap.size()) {
+            minheap.add(maxheap.remove());
+        }
+    }
+    System.out.println((maxheap.size() == minheap.size()) ? 0.5*(minheap.peek()+maxheap.peek()) : minheap.peek());
+}
